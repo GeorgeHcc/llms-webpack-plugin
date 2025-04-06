@@ -20,9 +20,6 @@ importers:
       tsup:
         specifier: ^8.4.0
         version: 8.4.0(tsx@4.19.3)(typescript@5.8.3)
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -1359,6 +1356,7 @@ snapshots:
   get-tsconfig@4.10.0:
     dependencies:
       resolve-pkg-maps: 1.0.0
+    optional: true
 
   glob-to-regexp@0.4.1: {}
 
@@ -1470,7 +1468,8 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-pkg-maps@1.0.0: {}
+  resolve-pkg-maps@1.0.0:
+    optional: true
 
   rollup@4.39.0:
     dependencies:
@@ -1641,6 +1640,7 @@ snapshots:
       get-tsconfig: 4.10.0
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   typescript@5.8.3: {}
 

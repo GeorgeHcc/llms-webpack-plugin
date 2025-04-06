@@ -16,20 +16,19 @@ class LLMSWebpackPlugin implements WebpackPluginInstance {
   }
 
   apply(compiler: Compiler) {
-    // const { llmsDir } = this;
-
-    // 开发模式：添加中间件处理请求
     if (compiler.options.mode === "development") {
       this.setupDevServerMiddleware(compiler);
     }
 
-    // 构建模式：复制文件到输出目录
+    // Copy markdown files to output directory
     this.setupBuildCopy(compiler);
   }
 
   private setupDevServerMiddleware(compiler: Compiler): void {
     const originalSetupMiddlewares =
-      compiler.options.devServer && compiler.options.devServer.setupMiddlewares;
+      compiler.options.devServer &&
+      /** not compatiable webpack v4,need use compiler.options.devServer.before */
+      compiler.options.devServer.setupMiddlewares;
     const llmsDirAbsolute = resolve(process.cwd(), this.llmsDir);
 
     compiler.options.devServer = {
@@ -42,7 +41,6 @@ class LLMSWebpackPlugin implements WebpackPluginInstance {
           middlewares = originalSetupMiddlewares(middlewares, devServer);
         }
 
-        // 获取所有.md文件并打印路由
         try {
           const mdFiles = getAllMarkdownFiles(llmsDirAbsolute);
           const routes = mdFiles.map((file: string) =>
@@ -56,11 +54,11 @@ class LLMSWebpackPlugin implements WebpackPluginInstance {
           console.error("LLMS Plugin: Error reading markdown files:", error);
         }
 
-        // 添加自定义中间件
+        // Add middleware to handle requests for markdown files
         middlewares.unshift({
           name: "llms-middleware",
           middleware: (req, res, next) => {
-            // 处理llms.txt请求
+            // handle requests for markdown files
             if (req.url === "/llms.txt") {
               try {
                 const content = readFileSync(join(llmsDirAbsolute, "llms.txt"), "utf-8");
@@ -105,6 +103,7 @@ class LLMSWebpackPlugin implements WebpackPluginInstance {
         try {
           const llmsTxtPath = join(llmsDirAbsolute, "llms.txt");
           const content = readFileSync(llmsTxtPath, "utf-8");
+          /** not compatiable webpack v4, need use API compilation.assets */
           compilation.emitAsset(
             "llms.txt",
             new RawSource(content) as unknown as import("webpack").sources.Source
