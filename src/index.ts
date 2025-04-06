@@ -160,3 +160,8 @@ function getAllMarkdownFiles(dir: string): string[] {
 }
 
 export default LLMSWebpackPlugin;
+
+// for CommonJS compatibility
+if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
+  module.exports = LLMSWebpackPlugin;
+}
