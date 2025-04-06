@@ -1,6 +1,6 @@
-# webpack-plugin-llms
+# llms-webpack-plugin
 
-`webpack-plugin-llms` is a Webpack plugin that processes Markdown files and `llms.txt` files following the [llms.txt specification](https://llmstxt.org). It supports middleware functionality in development mode and file copying in build mode.
+`llms-webpack-plugin` is a Webpack plugin that processes Markdown files and `llms.txt` files following the [llms.txt specification](https://llmstxt.org). It supports middleware functionality in development mode and file copying in build mode.
 
 
 ## Features
@@ -19,7 +19,7 @@
 Install the plugin using npm:
 
 ```bash
-npm install webpack-plugin-llms --save-dev
+npm install llms-webpack-plugin --save-dev
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ Add `LLMSWebpackPlugin` to your Webpack configuration:
 
 ```javascript
 // webpack.config.js
-const LLMSWebpackPlugin = require('webpack-plugin-llms');
+const LLMSWebpackPlugin = require('llms-webpack-plugin');
 
 module.exports = {
   mode: 'development', // or 'production'
